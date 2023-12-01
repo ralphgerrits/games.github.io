@@ -17,21 +17,23 @@ function draw() {
   mouseX = constrain(mouseX, 25, width - 25);
   mouseY = constrain(mouseY, 25, height - 25);
 
-  text("Beweeg de muis | x = " + round(mouseX) + " en y = " + round(mouseY), 10, 20);
-
   // Kleur aanpassen aan de randen
   if (mouseX >= width - 30 || mouseX <= 30 || mouseY <= 30 || mouseY >= height - 30) {
     kleur = 'red';
   } else {
-    kleur = 'indianred';
-  }
+    // Afstand berekenen tot zwarte bol
+    afstand = dist(mouseX, mouseY, width / 2, height / 2);
 
-  // Afstand berekenen tot zwarte bol
-  afstand = dist(mouseX, mouseY, 225, 225);
+    // Stralen van de cirkels
+    var straalZwarteCirkel = 50;
+    var straalRodeCirkel = 5;
 
-  // Kleur van JOS aanpassen op basis van afstand
-  if (afstand <= 5) {
-    kleur = 'red';
+    // Kleur van JOS aanpassen op basis van afstand
+    if (afstand <= straalZwarteCirkel - straalRodeCirkel) {
+      kleur = 'red';
+    } else {
+      kleur = 'indianred';
+    }
   }
 
   // Achtergrondkleur aanpassen op basis van positie van JOS
@@ -41,9 +43,12 @@ function draw() {
     background('white');
   }
 
+  // Coördinaten en afstand weergeven
+  text("Beweeg de muis | x = " + round(mouseX) + " en y = " + round(mouseY), 10, 20);
+  text("Afstand tot zwarte bol: " + round(afstand), 10, 40);
+
   ellipse(width / 2, height / 2, 100);
   tekenJos(mouseX, mouseY, kleur);
-  text("Afstand tot zwarte bol: " + round(afstand), 10, 40);
 }
 
 function tekenJos(x, y, kleur) {
