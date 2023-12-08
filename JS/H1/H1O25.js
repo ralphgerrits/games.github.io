@@ -3,9 +3,9 @@ var xPositieWit;
 var yPositieWit;
 var xSnelheidWit = 8;
 var ySnelheidWit = 5;
-var zwaartekracht = 0.1; // Zwaartekrachtsnelheid
-var aantrekkingskracht = 0.5; // Aantrekkingskracht met pijltjestoetsen
-var stuiterFactor = 0.7; // Verlaagde stuiteringsfactor
+var aantrekkingskrachtX = 0; // Aantrekkingskracht in de x-richting begint uitgeschakeld
+var aantrekkingskrachtY = 0; // Aantrekkingskracht in de y-richting begint uitgeschakeld
+var stuiterFactor = 1; // Verlaagde stuiteringsfactor
 
 var straalBlauw = 20;
 var xPositieBlauw;
@@ -49,15 +49,8 @@ function draw() {
   gebruikBesturing();
 
   // Aantrekkingskracht van zijkanten
-  if (keyIsDown(LEFT_ARROW)) {
-    xSnelheidWit -= aantrekkingskracht; // Aantrekkingskracht naar links
-  }
-  if (keyIsDown(RIGHT_ARROW)) {
-    xSnelheidWit += aantrekkingskracht; // Aantrekkingskracht naar rechts
-  }
-
-  // Zwaartekracht toevoegen
-  ySnelheidWit += zwaartekracht;
+  xSnelheidWit += aantrekkingskrachtX; // Aantrekkingskracht in de x-richting
+  ySnelheidWit += aantrekkingskrachtY; // Aantrekkingskracht in de y-richting
 
   // Harde terugstuitering bij de zijkanten voor de witte bal
   if (xPositieWit - straalWit < 0) {
@@ -86,12 +79,16 @@ function draw() {
 }
 
 function gebruikBesturing() {
-  // Aantrekkingskracht van zijkanten altijd actief
+  // Aantrekkingskracht alleen actief wanneer de linker- of rechterpijl wordt ingedrukt
   if (keyIsDown(LEFT_ARROW)) {
-    xSnelheidWit -= aantrekkingskracht; // Aantrekkingskracht naar links
-  }
-  if (keyIsDown(RIGHT_ARROW)) {
-    xSnelheidWit += aantrekkingskracht; // Aantrekkingskracht naar rechts
+    aantrekkingskrachtX = 0.5; // Aantrekkingskracht naar rechts
+    aantrekkingskrachtY = 0.5; // Aantrekkingskracht naar beneden
+  } else if (keyIsDown(RIGHT_ARROW)) {
+    aantrekkingskrachtX = -0.5; // Aantrekkingskracht naar links
+    aantrekkingskrachtY = -0.5; // Aantrekkingskracht naar boven
+  } else {
+    aantrekkingskrachtX = 0; // Geen aantrekkingskracht in de x-richting als er geen pijltoets wordt ingedrukt
+    aantrekkingskrachtY = 0; // Geen aantrekkingskracht in de y-richting als er geen pijltoets wordt ingedrukt
   }
 }
 
