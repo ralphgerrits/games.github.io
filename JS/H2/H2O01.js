@@ -1,4 +1,4 @@
-var kater,katerKlein,landschap,kever;
+var kater, bomen, kever;
 var keverX;
 var keverY;
 
@@ -9,7 +9,7 @@ function preload() {
 }
 
 function setup() {
-  canvas = createCanvas(450,450);
+  canvas = createCanvas(450, 450);
   canvas.parent('processing');
   keverX = 150;
   keverY = 100;
@@ -17,8 +17,11 @@ function setup() {
 
 function draw() {
   background(bomen);  
-  // image(katerKlein,0,0);
-  keverX+=random(-5,5);
-  keverY+=random(-5,5);
-  // image(kever,keverX,keverY);
+  image(kater, 0, 0);  // Opmerking: katerKlein is niet gedefinieerd, dus ik gebruik hier kater
+  keverX += random(-5, 5);
+  keverY += random(-5, 5);
+  
+  
+  image(kever, keverX, keverY, 30, 30);
+
 }
